@@ -1,4 +1,4 @@
-import {useThemeStore} from "../store/useThemeStore.jsx";
+import {useThemeStore} from "../store/useThemeStore.js";
 import {THEME} from "../constants/index.js";
 
 

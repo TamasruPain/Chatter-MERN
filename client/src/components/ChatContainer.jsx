@@ -1,14 +1,14 @@
-import React, {useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
 import ChatHeader from "./ChatHeader.jsx";
 import MessageInput from "./MessageInput.jsx";
-import {useChatStore} from "../store/useChatStore.js";
+import { useChatStore } from "../store/useChatStore.js";
 import MessageSkeleton from "./skeletons/MessageSkeleton.jsx";
-import {useAuthStore} from "../store/useAuthStore.js";
+import { useAuthStore } from "../store/useAuthStore.js";
 import profileAvatar from '../assets/profile-avatar.png'
 
 const ChatContainer = () => {
     const messageEndRef = useRef(null)
-    const {authUser} = useAuthStore()
+    const { authUser } = useAuthStore()
     const {
         messages,
         getMessages,
@@ -26,33 +26,42 @@ const ChatContainer = () => {
 
     useEffect(() => {
         if (messageEndRef.current && messages) {
-            messageEndRef.current.scrollIntoView({behavior: "smooth"});
+            messageEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }, [messages])
 
 
     if (isMessagesLoading) {
         return (
-            <div className="w-full h-full overflow-auto">
-                <ChatHeader/>
-                <MessageSkeleton/>
-                <MessageInput/>
+            <div className="flex flex-col w-full">
+                <div className="flex-shrink-0">
+                    <ChatHeader />
+                </div>
+                <div className="flex-1 p-4 overflow-y-auto min-h-0">
+                    <MessageSkeleton />
+                </div>
+                <div className="flex-shrink-0">
+                    <MessageInput />
+                </div>
             </div>
         )
     }
 
     return (
-        <div className="w-full shadow-sm">
+        <div className="flex flex-col h-136 md:h-130 lg:h-190 xl:h-160 w-full">
+            {/* Chat Header */}
+            <div className="flex-shrink-0">
+                <ChatHeader />
+            </div>
 
-            <div className="flex flex-col h-[100%] rounded-lg">
-                {/* Chat Header */}
-                <div>
-                    <ChatHeader/>
-                </div>
-
-                {/* Chat Messages */}
-                <div className="p-4 space-y-4 bg-base-100/90 h-[100%] overflow-y-auto">
-                    {messages.map((message) => (
+            {/* Chat Messages */}
+            <div className="flex-1 p-4 space-y-4 overflow-y-auto min-h-0">
+                {messages.length === 0 ? (
+                    <div className="flex items-center justify-center text-base-content/50">
+                        <p>No messages yet. Start the conversation!</p>
+                    </div>
+                ) : (
+                    messages.map((message) => (
                         <div
                             key={message._id}
                             className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
@@ -65,7 +74,7 @@ const ChatContainer = () => {
                                             ? authUser.profilePic || `${profileAvatar}`
                                             : selectedUser.profilePic || `${profileAvatar}`
                                     }
-                                         alt="profile pic"
+                                        alt="profile pic"
                                     />
                                 </div>
                             </div>
@@ -79,7 +88,7 @@ const ChatContainer = () => {
                                 </time>
                             </div>
                             <div className={`chat-bubble flex flex-col sm:max-w-[60%] shadow-md
-                            ${message.senderId === authUser._id ? "bg-primary text-primary-content" : "bg-base-200"}`}>
+                        ${message.senderId === authUser._id ? "bg-primary text-primary-content" : "bg-base-200"}`}>
                                 {message.image && (
                                     <img
                                         src={message.image}
@@ -88,18 +97,16 @@ const ChatContainer = () => {
                                     />
                                 )}
                                 {message.text && <p>{message.text}</p>}
-
                             </div>
                         </div>
-                    ))}
-                </div>
-
-                {/* Chat Input */}
-                <div>
-                    <MessageInput/>
-                </div>
+                    ))
+                )}
             </div>
-            <div className="bg-base-300/50 h-[10%] block md:hidden"/>
+
+            {/* Chat Input */}
+            <div className="flex-shrink-0">
+                <MessageInput />
+            </div>
         </div>
     )
 }

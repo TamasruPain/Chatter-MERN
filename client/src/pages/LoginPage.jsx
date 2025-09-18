@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import bird from "../assets/bird.png";
-import {Link} from "react-router-dom";
-import {Eye, EyeOff, Loader2, Lock, LucideMail} from "lucide-react";
-import {useAuthStore} from "../store/useAuthStore.js";
+import birdsAndMountain from "../assets/birds03.png"
+import { Link } from "react-router-dom";
+import { Eye, EyeOff, Loader2, Lock, LucideMail } from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore.js";
 import toast from "react-hot-toast";
 
 const LoginPage = () => {
@@ -14,7 +15,7 @@ const LoginPage = () => {
         password: ""
     });
 
-    const {login, isLoggingIn} = useAuthStore()
+    const { login, isLoggingIn } = useAuthStore()
 
     const validateLoginForm = () => {
         if (!formData.email.trim())
@@ -54,35 +55,35 @@ const LoginPage = () => {
                 <p className="text-lg mb-6">Please login to continue</p>
             </div>
             {/*  right side  */}
-            <div className='flex justify-center items-center'>
-                <fieldset className="fieldset bg-base-200/90 rounded-box w-xs p-4">
+            <div className='flex justify-center lg:items-center'>
+                <fieldset className="fieldset bg-base-200/90 rounded-box w-xs">
                     <legend className="fieldset-legend text-2xl">Login</legend>
 
-                    <form onSubmit={handleSubmit} className='mt-5 flex flex-col gap-4'>
+                    <form onSubmit={handleSubmit} className='mt-5 flex flex-col gap-4 p-4'>
                         <div>
-                            <label className="label"><LucideMail className='size-4'/> Email</label>
+                            <label className="label"><LucideMail className='size-4' /> Email</label>
                             <input type="email" className="input border-none bg-black/20" placeholder="Email"
-                                   value={formData.email}
-                                   onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             />
                         </div>
                         <div>
-                            <label className="label"><Lock className='size-4'/>Password</label>
+                            <label className="label"><Lock className='size-4' />Password</label>
                             <div className="flex gap-1">
                                 <input type={showLoginPassword ? "text" : "password"}
-                                       className="input bg-black/20 border-none"
-                                       placeholder="Password"
-                                       value={formData.password}
-                                       onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                    className="input bg-black/20 border-none"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                 />
                                 <button type="button"
-                                        className="btn bg-black/20 px-3"
-                                        onClick={() => setShowLoginPassword(!showLoginPassword)}
+                                    className="btn bg-black/20 px-3"
+                                    onClick={() => setShowLoginPassword(!showLoginPassword)}
                                 >
                                     {showLoginPassword ? (
-                                        <EyeOff className="size-4"/>
+                                        <EyeOff className="size-4" />
                                     ) : (
-                                        <Eye className='size-4'/>
+                                        <Eye className='size-4' />
                                     )}
                                 </button>
                             </div>
@@ -90,7 +91,7 @@ const LoginPage = () => {
                         <button className="btn btn-soft mt-10" disabled={isLoggingIn}>
                             {isLoggingIn ? (
                                 <>
-                                    <Loader2 className='size-4 animate-spin'/>
+                                    <Loader2 className='size-4 animate-spin' />
                                     loading...
                                 </>
                             ) : (
@@ -98,9 +99,10 @@ const LoginPage = () => {
                             )}
                         </button>
                     </form>
-                    <p className="flex items-center justify-center m-5 text-base-content/50">Don't have an account?{" "}
+                    <p className="flex items-center justify-center mt-2 lg:mb-5 text-base-content/50">Don't have an account?{" "}
                         <Link className='link text-blue-400' to={'/signup'}>Sign Up</Link>
                     </p>
+                    <img src={birdsAndMountain} alt="bird" className="lg:hidden flex shadow-2xl" />
                 </fieldset>
             </div>
         </div>

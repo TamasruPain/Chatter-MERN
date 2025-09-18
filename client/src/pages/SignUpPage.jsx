@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useAuthStore} from "../store/useAuthStore.js";
 import bird from "../assets/bird.png";
+import birdsAndMountain from "../assets/birds03.png"
 import {Link} from "react-router-dom";
 import {Eye, EyeOff, Loader2, Lock, LucideMail, User} from "lucide-react";
 import toast from "react-hot-toast";
@@ -44,7 +45,7 @@ const SignUpPage = () => {
     }
 
     return (
-        <div className="grid lg:grid-cols-2 gap-5 h-screen backdrop-blur-lg">
+        <div className="min-h-screen grid lg:grid-cols-2 gap-5 h-screen backdrop-blur-lg">
             {/* left side  */}
             <div className="flex-col justify-center items-center gap-6 text-center hidden lg:flex">
                 <img
@@ -56,11 +57,11 @@ const SignUpPage = () => {
                 <p className="text-lg mb-6">Please sign up to continue</p>
             </div>
             {/*  right side  */}
-            <div className='flex flex-col justify-center items-center'>
-                <fieldset className="fieldset bg-base-200/90 rounded-box w-xs p-4">
+            <div className='flex justify-center lg:items-center'>
+                <fieldset className="fieldset bg-base-200/90 rounded-box w-xs">
                     <legend className="fieldset-legend text-2xl">SignUp</legend>
 
-                    <form onSubmit={handleSubmit} className='mt-5 flex flex-col gap-4'>
+                    <form onSubmit={handleSubmit} className='mt-5 flex flex-col gap-4 p-4'>
                         <div>
                             <label className="label"><User className='size-4 '/> Full Name</label>
                             <input type="text" className="input border-none bg-black/20" placeholder="Name"
@@ -109,10 +110,11 @@ const SignUpPage = () => {
                             )}
                         </button>
                     </form>
-                    <p className="flex items-center justify-center m-5 text-base-content/50">Already have an
+                    <p className="flex items-center justify-center mt-2 lg:mb-5 text-base-content/50">Already have an
                         account?{" "}
                         <Link className='link text-blue-400' to={'/login'}>Login</Link>
                     </p>
+                    <img src={birdsAndMountain} alt="bird" className="lg:hidden flex shadow-2xl" />
                 </fieldset>
             </div>
         </div>

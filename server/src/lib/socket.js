@@ -8,7 +8,7 @@ function initSocket(app) {
         cors: {
             origin: [
                 "http://localhost:5173",
-            
+                "https://chatter-bird-chatapp.vercel.app"
             ],
             credentials: true
         }
@@ -27,7 +27,12 @@ function initSocket(app) {
         });
     });
 
-    return { io, server };
+    // Add this function to get receiver socket ID
+    const getReceiverSocketId = (receiverId) => {
+        return userSocketMap[receiverId];
+    };
+
+    return { io, server, getReceiverSocketId };
 }
 
 module.exports = initSocket;

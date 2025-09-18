@@ -22,11 +22,20 @@ app.use(cors({
     credentials: true
 }));
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
 
 const initSocket = require('./lib/socket');
-const { io, server } = initSocket(app);
+const { io, server, getReceiverSocketId } = initSocket(app);
+
+// Make socket accessible globally
+global.io = io;
+global.getReceiverSocketId = getReceiverSocketId;
 
 const port = process.env.PORT || 3000;
 const startServer = async () => {
@@ -42,8 +51,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-//heath check endpoint
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok' });
-});

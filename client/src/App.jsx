@@ -9,7 +9,7 @@ import {useAuthStore} from "./store/useAuthStore.js";
 import {Loader} from "lucide-react";
 import backgroundImage from './assets/birds02.png';
 import {Toaster} from "react-hot-toast";
-import {useThemeStore} from "./store/useThemeStore.jsx";
+import {useThemeStore} from "./store/useThemeStore.js";
 import ThemeSettingsPage from "./pages/ThemeSettingsPage.jsx";
 import ChatsPage from "./pages/ChatsPage.jsx";
 import Dock from "./components/Dock.jsx";

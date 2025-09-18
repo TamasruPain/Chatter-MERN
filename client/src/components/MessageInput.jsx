@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react'
 import {useChatStore} from "../store/useChatStore.js";
-import {Image, Send, X} from "lucide-react";
+import {Image as ImageIcon, Send, X} from "lucide-react";
 import toast from "react-hot-toast";
 
 const MessageInput = () => {
@@ -96,7 +96,7 @@ const MessageInput = () => {
                         onClick={() => fileInputRef.current?.click()}
                         className={`hidden sm:flex btn btn-soft ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
                     >
-                        <Image size={22}/>
+                        <ImageIcon size={22}/>
                     </button>
                     <button
                         type="submit"

@@ -1,48 +1,47 @@
 const User = require('../models/user.model')
 const Message = require('../models/message.model');
 const cloudinary = require('../lib/cloudinary');
-const {getReceiverSocketId, io} = require("../lib/socket");
 
 //fetch users for sidebar
 const getUsersForSidebar = async (req, res) => {
     try {
         const loggedInUserId = req.user._id;
-        const filteredUsers = await User.find({_id: {$ne: loggedInUserId}}).select("-password");
+        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
 
         res.status(200).json(filteredUsers);
     } catch (error) {
         console.error("Error fetching users for sidebar:", error.message);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 
 }
 
 const getMessages = async (req, res) => {
     try {
-        const {id: userToChatId} = req.params;
+        const { id: userToChatId } = req.params;
         const myId = req.user._id;
 
         const messages = await Message.find({
             $or: [
-                {senderId: myId, receiverId: userToChatId},
-                {senderId: userToChatId, receiverId: myId}
-            ]
+                { senderId: myId, receiverId: userToChatId },
+                { senderId: userToChatId, receiverId: myId },
+            ],
         })
 
         res.status(200).json(messages);
 
     } catch (error) {
         console.error("Error fetching messages:", error.message);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
 
     }
 }
 
 const sendMessage = async (req, res) => {
     try {
-        const {text, image} = req.body;
-        const {id: receiverId} = req.params;
-        const myId = req.user._id;
+        const { text, image } = req.body;
+        const { id: receiverId } = req.params;
+        const senderId = req.user._id;
 
         let imageUrl;
         if (image) {
@@ -51,7 +50,7 @@ const sendMessage = async (req, res) => {
         }
 
         const newMessage = new Message({
-            senderId: myId,
+            senderId,
             receiverId,
             text,
             image: imageUrl
@@ -59,16 +58,17 @@ const sendMessage = async (req, res) => {
 
         await newMessage.save();
 
-        const receiverSocketId = getReceiverSocketId(receiverId);
-        if(receiverSocketId){
-            io.to(receiverSocketId).emit("newMessage", newMessage);
+        // Use global socket instance
+        const receiverSocketId = global.getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            global.io.to(receiverSocketId).emit("newMessage", newMessage);
         }
 
         res.status(201).json(newMessage);
 
     } catch (error) {
         console.error("Error sending message:", error.message);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 }
 

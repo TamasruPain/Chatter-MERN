@@ -26,7 +26,7 @@ const Sidebar = () => {
     )
 
     return (
-        <aside>
+        <aside className="h-136 md:h-130 lg:h-190 xl:h-160">
             <div className="ml-6">
                 <div className="flex items-center mt-5 mb-2 gap-3">
                     <Users2 size={50}/>
@@ -41,7 +41,7 @@ const Sidebar = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col h-[92%] w-80 p-2 overflow-y-auto rounded-lg">
+            <div className="flex flex-col w-80 p-2 overflow-y-auto rounded-lg">
                 <ul className="space-y-2 rounded-lg">
                     {/* Placeholder for user list items */}
                     {filteredUsers.map((user) => (
