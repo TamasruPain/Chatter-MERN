@@ -67,6 +67,7 @@ const SignUpPage = () => {
                             <input type="text" className="input border-none bg-black/20" placeholder="Name"
                                    value={formData.fullName}
                                    onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                                   required
                             />
                         </div>
                         <div>
@@ -74,6 +75,7 @@ const SignUpPage = () => {
                             <input type="email" className="input border-none bg-black/20" placeholder="Email"
                                    value={formData.email}
                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                   required
                             />
                         </div>
                         <div>
@@ -84,6 +86,7 @@ const SignUpPage = () => {
                                        placeholder="Password"
                                        value={formData.password}
                                        onChange={(e) => setFormData({...formData, password: e.target.value})}
+                                       required
                                 />
                                 <button type="button"
                                         className="btn bg-black/20 px-3"

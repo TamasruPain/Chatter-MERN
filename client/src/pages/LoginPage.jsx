@@ -57,7 +57,7 @@ const LoginPage = () => {
             {/*  right side  */}
             <div className='flex justify-center lg:items-center'>
                 <fieldset className="fieldset bg-base-200/90 rounded-box w-xs">
-                    <legend className="fieldset-legend text-2xl">Login</legend>
+                    <legend className="fieldset-legend text-2xl ml-4">Login</legend>
 
                     <form onSubmit={handleSubmit} className='mt-5 flex flex-col gap-4 p-4'>
                         <div>
@@ -65,6 +65,7 @@ const LoginPage = () => {
                             <input type="email" className="input border-none bg-black/20" placeholder="Email"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                required
                             />
                         </div>
                         <div>
@@ -75,6 +76,7 @@ const LoginPage = () => {
                                     placeholder="Password"
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    required
                                 />
                                 <button type="button"
                                     className="btn bg-black/20 px-3"
